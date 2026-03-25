@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wevertin | Official Channel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #050505;
+            --bg-card: #0f0f0f;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #a855f7; /* Roxo Premium */
+            --accent-glow: rgba(168, 85, 247, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 8%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a0b2e 0%, var(--bg-main) 70%);
+            padding: 0 5%;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(to bottom, #fff 40%, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            padding: 1.2rem 3.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        /* --- VIDEO SECTION --- */
+        .container {
+            padding: 8rem 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* --- VIDEO CARDS --- */
+        .video-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255,255,255,0.03);
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .thumb-wrap {
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .thumb-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .video-card:hover .thumb-wrap img {
+            transform: scale(1.1);
+        }
+
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-card:hover .play-overlay { opacity: 1; }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info { padding: 2rem; }
+
+        .info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .info p {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- SCROLL ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            padding: 5rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">WEV<span>ERTIN</span></a>
+        <div class="nav-right">
+            <button class="lang-btn" id="langBtn">PT / EN</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="reveal" data-i18n="hero_title">Precision Gaming.</h1>
+        <p class="reveal" data-i18n="hero_desc">Highlighting the best plays, tutorials, and content from a rising creator. Welcome to the official hub of the Wevertin channel.</p>
+        <a href="https://www.youtube.com/@__wevertin__" target="_blank" class="cta-button reveal" data-i18n="hero_cta">Enter the Channel</a>
+    </section>
+
+    <div class="container" id="videos">
+        <div class="section-header reveal">
+            <h2 data-i18n="sec_title">Featured Content</h2>
+        </div>
+
+        <div class="grid">
+            <a href="https://youtu.be/JmsF92eDlY8" target="_blank" class="video-card reveal">
+                <div class="thumb-wrap">
+                    <img src="https://i.ytimg.com/vi/JmsF92eDlY8/maxresdefault.jpg" alt="Getting better .-.">
+                    <div class="play-overlay">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+                <div class="info">
+                    <p data-i18n="tag_latest">Latest Upload</p>
+                    <h3>Getting better .-.</h3>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/DDmYiBAuLjc" target="_blank" class="video-card reveal">
+                <div class="thumb-wrap">
+                    <img src="https://i.ytimg.com/vi/DDmYiBAuLjc/maxresdefault.jpg" alt="clean `-` ">
+                    <div class="play-overlay">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+                <div class="info">
+                    <p data-i18n="tag_gameplay">Gameplay</p>
+                    <h3>clean `-`</h3>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/pL2FE4JYAbc" target="_blank" class="video-card reveal">
+                <div class="thumb-wrap">
+                    <img src="https://i.ytimg.com/vi/pL2FE4JYIt8/maxresdefault.jpg" alt="just a raze in silver `-` ">
+                    <div class="play-overlay">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+                <div class="info">
+                    <p data-i18n="tag_gameplay">Gameplay</p>
+                    <h3>just a raze in silver `-`</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p data-i18n="footer">© 2026 Wevertin • Built for the elite.</p>
+    </footer>
+
+    <script>
+        // --- TRANSLATIONS ---
+        const content = {
+            en: {
+                hero_title: "Precision Gaming.",
+                hero_desc: "Highlighting the best plays, tutorials, and content from a rising creator. Welcome to the official hub of the Wevertin channel.",
+                hero_cta: "Enter the Channel",
+                sec_title: "Featured Content",
+                tag_latest: "Latest Upload",
+                tag_gameplay: "Gameplay",
+                footer: "© 2026 Wevertin • Built for the elite."
+            },
+            pt: {
+                hero_title: "Gaming de Precisão.",
+                hero_desc: "Destacando as melhores jogadas, tutoriais e conteúdo de um criador em ascensão. Bem-vindo ao hub oficial do canal Wevertin.",
+                hero_cta: "Entrar no Canal",
+                sec_title: "Conteúdo em Destaque",
+                tag_latest: "Último Post",
+                tag_gameplay: "Jogabilidade",
+                footer: "© 2026 Wevertin • Criado para a elite."
+            }
+        };
+
+        let currentLang = 'en';
+        const langBtn = document.getElementById('langBtn');
+
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'pt' : 'en';
+            langBtn.innerText = currentLang === 'en' ? 'PT / EN' : 'EN / PT';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerText = content[currentLang][key];
+            });
+        });
+
+        // --- SMOOTH SCROLL REVEAL ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        reveal(); // Run once at start
+    </script>
+</body>
+</html>
